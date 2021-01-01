@@ -1,8 +1,6 @@
 import 'dart:typed_data';
 import 'package:my_smart_home/dictionary.dart';
-import 'package:my_smart_home/local_notification.dart';
 import 'package:my_smart_home/starting.dart';
-import 'package:my_smart_home/widgets/alarm_card.dart';
 
 class Packet {
   Uint8List packet;
@@ -49,8 +47,6 @@ class Packet {
     switch (getDevice()) {
       case Device.A_Hirsiz:
         print("Hırsız vaaaaaar!!");
-        // LocalNotification ln = new LocalNotification();
-        // ln.sendNow("title", "Hırsız var!!");
         return true;
       case Device.A_Yangin:
         print("Yangın vaaaar!!");

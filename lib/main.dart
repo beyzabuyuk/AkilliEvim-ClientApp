@@ -6,8 +6,8 @@ import 'package:my_smart_home/starting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
-  ConnectSocket.sock = await Socket.connect('192.168.137.9', 80);
-  ConnectSocket.getData();
+  // ConnectSocket.sock = await Socket.connect('192.168.137.9', 80);
+  // ConnectSocket.getData();
   runApp(MyApp());
 }
 
