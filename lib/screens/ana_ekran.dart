@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_smart_home/models/alarm_model.dart';
-import 'package:my_smart_home/models/rooms_model.dart';
+import 'package:my_smart_home/modeller/alarm_model.dart';
+import 'package:my_smart_home/modeller/odalar.dart';
 import 'package:my_smart_home/packet.dart';
-import 'package:my_smart_home/screens/screens.dart';
+import 'package:my_smart_home/screens/ekranlar.dart';
 import 'package:my_smart_home/widgets/cate_container.dart';
-import 'package:my_smart_home/widgets/top_header.dart';
+import 'package:my_smart_home/widgets/baslik.dart';
 import 'package:my_smart_home/widgets/widgets.dart';
 
 import '../starting.dart';
-import 'detail_screen.dart';
-import 'kitchen_screen.dart';
+import 'oturma_odasi.dart';
+import 'mutfak.dart';
 
-class HomeScreen extends StatelessWidget {
+class AnaEkran extends StatelessWidget {
   List<RoomsModel> _listRooms = [
     RoomsModel(
       image: 'assets/images/oturma_odasi2.jpg',
@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TopHeader(),
+              Baslik(),
               SizedBox(
                 height: _height * 0.05,
               ),
@@ -76,21 +76,21 @@ class HomeScreen extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => DetailScreen(
+                                    builder: (context) => OturmaOdasi(
                                           title: _listRooms[index].name,
                                         )));
                           } else if (index == 1) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => KitchenScreen(
+                                    builder: (context) => Mutfak(
                                           title: _listRooms[index].name,
                                         )));
                           } else {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => BedroomScreen(
+                                    builder: (context) => YatakOdasi(
                                           title: _listRooms[index].name,
                                         )));
                           }

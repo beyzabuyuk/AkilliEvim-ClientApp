@@ -1,44 +1,44 @@
-import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_smart_home/models/models.dart';
-import 'package:my_smart_home/models/select_model.dart';
-import 'package:my_smart_home/widgets/lighting_card.dart';
-import 'package:my_smart_home/widgets/select_container.dart';
-import 'package:my_smart_home/widgets/select_time.dart';
+import 'package:my_smart_home/modeller/modeller.dart';
+import 'package:my_smart_home/modeller/secilen_model.dart';
+import 'package:my_smart_home/widgets/lamba_card.dart';
+import 'package:my_smart_home/widgets/secilen_islem.dart';
+import 'package:my_smart_home/widgets/zamanlayici.dart';
 import '../starting.dart';
 
-class BedroomScreen extends StatefulWidget {
+class Mutfak extends StatefulWidget {
   final String title;
-  BedroomScreen({Key key, @required this.title}) : super(key: key);
-
+  Mutfak({Key key, @required this.title}) : super(key: key);
   @override
-  _BedroomScreenSteate createState() => _BedroomScreenSteate();
+  _MutfakState createState() => _MutfakState();
 }
 
-class _BedroomScreenSteate extends State<BedroomScreen> {
+class _MutfakState extends State<Mutfak> {
   List<SelectModel> _listSelect = [
     SelectModel(
       icon: 'assets/images/light.png',
       name: 'Işık',
     ),
   ];
-  List<LightingModel> _listLighting = [
-    LightingModel(
+
+  List<LambaModel> _listLighting = [
+    LambaModel(
         name: 'Lamba',
         image: 'assets/images/ceiling_lighting.png',
         operation: Operation.UpdateDevice,
-        device: Device.Y_Lamba),
-    LightingModel(
-        name: 'Pencere',
-        image: 'assets/images/pencere.jpg',
+        device: Device.M_Lamba),
+    LambaModel(
+        name: 'Su Isıtıcısı',
+        image: 'assets/images/kettle.jpg',
         operation: Operation.UpdateDevice,
-        device: Device.Y_Pencere),
+        device: Device.M_Kettle),
   ];
 
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -60,7 +60,7 @@ class _BedroomScreenSteate extends State<BedroomScreen> {
                 scrollDirection: Axis.horizontal,
                 itemCount: _listSelect.length,
                 itemBuilder: (context, index) {
-                  return SelectContainer(
+                  return SecilenIslem(
                     icon: _listSelect[index].icon,
                     name: _listSelect[index].name,
                   );
@@ -76,7 +76,7 @@ class _BedroomScreenSteate extends State<BedroomScreen> {
                   return Padding(
                     padding:
                         const EdgeInsets.only(right: 8.0, top: 16, bottom: 16),
-                    child: LightingCard(
+                    child: LambaCard(
                       title: _listLighting[index].name,
                       image: _listLighting[index].image,
                       operation: _listLighting[index].operation,
@@ -93,7 +93,7 @@ class _BedroomScreenSteate extends State<BedroomScreen> {
             SizedBox(
               height: 8,
             ),
-            SelectTime(),
+            Zamanlayici(),
           ],
         ),
       ),

@@ -1,55 +1,44 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_smart_home/models/models.dart';
-import 'package:my_smart_home/models/select_model.dart';
-import 'package:my_smart_home/widgets/custom_slider.dart';
-import 'package:my_smart_home/widgets/lighting_card.dart';
-import 'package:my_smart_home/widgets/select_container.dart';
-import 'package:my_smart_home/widgets/select_time.dart';
-import 'package:my_smart_home/widgets/widgets.dart';
+import 'package:my_smart_home/modeller/modeller.dart';
+import 'package:my_smart_home/modeller/secilen_model.dart';
+import 'package:my_smart_home/widgets/lamba_card.dart';
+import 'package:my_smart_home/widgets/secilen_islem.dart';
+import 'package:my_smart_home/widgets/zamanlayici.dart';
 import '../starting.dart';
 
-class DetailScreen extends StatefulWidget {
+class YatakOdasi extends StatefulWidget {
   final String title;
-  DetailScreen({Key key, @required this.title}) : super(key: key);
+  YatakOdasi({Key key, @required this.title}) : super(key: key);
 
   @override
-  _DetailScreenState createState() => _DetailScreenState();
+  _YatakOdasiSteate createState() => _YatakOdasiSteate();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _YatakOdasiSteate extends State<YatakOdasi> {
   List<SelectModel> _listSelect = [
     SelectModel(
       icon: 'assets/images/light.png',
       name: 'Işık',
     ),
-    SelectModel(
-      icon: 'assets/images/heater.png',
-      name: 'Sıcaklık',
-    ),
   ];
-
-  List<LightingModel> _listLighting = [
-    LightingModel(
-      name: 'Lamba',
-      image: 'assets/images/ceiling_lighting.png',
-      operation: Operation.UpdateDevice,
-      device: Device.O_Lamba,
-    ),
-    LightingModel(
-      name: 'Pencere',
-      image: 'assets/images/pencere.jpg',
-      operation: Operation.UpdateDevice,
-      device: Device.O_Pencere,
-    )
+  List<LambaModel> _listLighting = [
+    LambaModel(
+        name: 'Lamba',
+        image: 'assets/images/ceiling_lighting.png',
+        operation: Operation.UpdateDevice,
+        device: Device.Y_Lamba),
+    LambaModel(
+        name: 'Pencere',
+        image: 'assets/images/pencere.jpg',
+        operation: Operation.UpdateDevice,
+        device: Device.Y_Pencere),
   ];
 
   @override
   Widget build(BuildContext context) {
-    // double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -71,7 +60,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 scrollDirection: Axis.horizontal,
                 itemCount: _listSelect.length,
                 itemBuilder: (context, index) {
-                  return SelectContainer(
+                  return SecilenIslem(
                     icon: _listSelect[index].icon,
                     name: _listSelect[index].name,
                   );
@@ -87,7 +76,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   return Padding(
                     padding:
                         const EdgeInsets.only(right: 8.0, top: 16, bottom: 16),
-                    child: LightingCard(
+                    child: LambaCard(
                       title: _listLighting[index].name,
                       image: _listLighting[index].image,
                       operation: _listLighting[index].operation,
@@ -98,25 +87,13 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: textCate(nameCate: 'Klima'),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Klima(),
-            CustomSlider(),
-            SizedBox(
-              height: 16,
-            ),
-            Padding(
               padding: const EdgeInsets.only(top: 30.0, left: 16),
               child: textCate(nameCate: 'Zamanlayıcı'),
             ),
             SizedBox(
               height: 8,
             ),
-            SelectTime(),
+            Zamanlayici(),
           ],
         ),
       ),

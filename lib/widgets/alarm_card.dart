@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_smart_home/packet.dart';
 
 import '../dictionary.dart';
 import '../starting.dart';
@@ -12,7 +13,12 @@ class AlarmCard extends StatefulWidget {
   final Operation operation;
   final Device device;
 
-  AlarmCard({this.title, this.image, this.device, this.operation});
+  AlarmCard({
+    this.title,
+    this.image,
+    this.device,
+    this.operation,
+  });
 
   @override
   _AlarmCardState createState() => _AlarmCardState();
@@ -24,7 +30,9 @@ class _AlarmCardState extends State<AlarmCard> {
     String status = Dictionary.map[widget.device] == false ? "Kapalı" : "Açık";
     Color _color = Colors.white;
     Color _colorText = Colors.black87;
-
+    setState(() {
+    
+    });
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16),
       child: Container(

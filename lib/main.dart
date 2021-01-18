@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:my_smart_home/screens/screens.dart';
+import 'package:my_smart_home/screens/ekranlar.dart';
 import 'package:my_smart_home/starting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
-  // ConnectSocket.sock = await Socket.connect('192.168.137.9', 80);
-  // ConnectSocket.getData();
+  ConnectSocket.sock = await Socket.connect('192.168.1.23', 80);
+  ConnectSocket.getData();
   runApp(MyApp());
 }
 
@@ -216,7 +216,7 @@ loginSection(BuildContext context) {
           onPressed: () {
             username == username1 && password == password1
                 ? Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()))
+                    MaterialPageRoute(builder: (context) => AnaEkran()))
                 : showAlertDialog(context);
             myPassword.clear();
             myUsername.clear();
@@ -237,7 +237,6 @@ showAlertDialog(BuildContext context) {
     },
   );
 
-  // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     title: Text("Hata"),
     content: Text("Kullanıcı adı veya şifre hatalı!"),
@@ -246,7 +245,6 @@ showAlertDialog(BuildContext context) {
     ],
   );
 
-  // show the dialog
   showDialog(
     context: context,
     builder: (BuildContext context) {

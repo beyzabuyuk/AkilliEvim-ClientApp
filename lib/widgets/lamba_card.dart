@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:my_smart_home/dictionary.dart';
 import '../starting.dart';
 
-class LightingCard extends StatefulWidget {
+class LambaCard extends StatefulWidget {
   final String title;
   final String image;
   final Operation operation;
   final Device device;
 
-  LightingCard({this.title, this.image, this.operation, this.device});
+  LambaCard({this.title, this.image, this.operation, this.device});
   @override
-  _LightingCardState createState() => _LightingCardState();
+  _LambaCardState createState() => _LambaCardState();
 }
 
-class _LightingCardState extends State<LightingCard> {
+class _LambaCardState extends State<LambaCard> {
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;

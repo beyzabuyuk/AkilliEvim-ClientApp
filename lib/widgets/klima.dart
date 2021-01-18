@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_smart_home/models/klima_model.dart';
+import 'package:my_smart_home/modeller/klima_model.dart';
 
 import 'package:my_smart_home/starting.dart';
 

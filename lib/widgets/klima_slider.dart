@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:my_smart_home/models/klima_model.dart';
+import 'package:my_smart_home/modeller/klima_model.dart';
 
-class CustomSlider extends StatefulWidget {
+class KlimaSlider extends StatefulWidget {
   @override
-  _CustomSliderState createState() => _CustomSliderState();
+  _KlimaSliderState createState() => _KlimaSliderState();
 }
 
-class _CustomSliderState extends State<CustomSlider> {
+class _KlimaSliderState extends State<KlimaSlider> {
   int value = 10;
 
   @override

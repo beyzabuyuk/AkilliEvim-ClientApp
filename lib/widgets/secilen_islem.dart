@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
-class SelectContainer extends StatelessWidget {
+class SecilenIslem extends StatelessWidget {
   final String icon;
   final String name;
 
-  SelectContainer({
+  SecilenIslem({
     @required this.icon,
     @required this.name,
   });
 
-
   @override
   Widget build(BuildContext context) {
-
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
 
@@ -36,7 +34,10 @@ class SelectContainer extends StatelessWidget {
           SizedBox(
             height: 8,
           ),
-          Text(name, style: TextStyle(color: Colors.grey[400]),),
+          Text(
+            name,
+            style: TextStyle(color: Colors.grey[400]),
+          ),
         ],
       ),
     );
