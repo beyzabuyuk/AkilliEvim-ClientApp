@@ -1,13 +1,17 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_smart_home/screens/ekranlar.dart';
 import 'package:my_smart_home/starting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+FirebaseAuth _auth = FirebaseAuth.instance;
+
 void main() async {
-  ConnectSocket.sock = await Socket.connect('192.168.1.23', 80);
-  ConnectSocket.getData();
+  // ConnectSocket.sock = await Socket.connect('192.168.1.23', 80);
+  // ConnectSocket.getData();
   runApp(MyApp());
 }
 
@@ -17,12 +21,95 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Akıllı Evim',
-      home: MyHomePage(),
+      home: App(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class App extends StatelessWidget {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _initialization,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Scaffold(
+              body: Center(
+            child: Text("Hata!" + snapshot.error.toString()),
+          ));
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          return _auth.currentUser != null ? AnaEkran() : MyHomePage();
+        }
+
+        return Scaffold(
+            body: Center(
+          child: CircularProgressIndicator(),
+        ));
+      },
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  void _emailSifreOlustur(email, sifre) async {
+    String _email = email;
+    String _password = sifre;
+
+    try {
+      //createUserWithEmailAndPassword'ün bana döndüreceği usercredential
+      UserCredential _credential = await _auth.createUserWithEmailAndPassword(
+          email: _email, password: _password);
+
+      User _yeniKullanici = _credential.user;
+      await _yeniKullanici.sendEmailVerification(); //kullanıcıya mail yollar.
+      if (_auth.currentUser != null) {
+        debugPrint("Size bir mail attık lütfen onaylayınız");
+        showAlertDialog(context);
+        await _auth.signOut();
+        debugPrint("Kullanıcı sistemden atıldı");
+      }
+      debugPrint(_yeniKullanici.toString());
+    } catch (e) {
+      debugPrint("********HATA******");
+      debugPrint(e.toString());
+    }
+  }
+
+  void _emailSifreGiris(BuildContext context, email, password) async {
+    String _email, _password;
+    _email = email;
+    _password = password;
+
+    try {
+      if (_auth.currentUser == null) {
+        User _oturumAcanKullanici = (await _auth.signInWithEmailAndPassword(
+                email: _email, password: _password))
+            .user;
+        debugPrint("giriş yapıldı");
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AnaEkran()));
+        if (_oturumAcanKullanici.emailVerified) {
+          debugPrint("Mail onaylı");
+        } else {
+          debugPrint("Lütfen mailinizi onaylayınız!");
+          _auth.signOut();
+        }
+      } else {
+        debugPrint("Oturum açmış kullanıcı zaten var");
+      }
+    } catch (e) {
+      debugPrint("Kullanıcı adı veya şifre hatalı");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,9 +218,7 @@ mainAlbumImage() {
 }
 
 loginSection(BuildContext context) {
-  String username = "admin";
-  String password = "123456";
-  String password1, username1;
+  String password, username;
   final myUsername = TextEditingController();
   final myPassword = TextEditingController();
 
@@ -186,7 +271,7 @@ loginSection(BuildContext context) {
         SizedBox(height: 5.0),
         TextField(
           onChanged: (String text) {
-            username1 = text;
+            username = text;
           },
           decoration: InputDecoration(labelText: 'Kullanıcı Adı'),
           controller: myUsername,
@@ -194,7 +279,7 @@ loginSection(BuildContext context) {
         SizedBox(height: 5.0),
         TextField(
           onChanged: (String text) {
-            password1 = text;
+            password = text;
           },
           obscureText: true,
           decoration:
@@ -214,15 +299,31 @@ loginSection(BuildContext context) {
             colors: <Color>[Colors.blueAccent, Colors.purple],
           ),
           onPressed: () {
-            username == username1 && password == password1
-                ? Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AnaEkran()))
-                : showAlertDialog(context);
+            _MyHomePageState giris = new _MyHomePageState();
+            giris._emailSifreGiris(context, username, password);
             myPassword.clear();
             myUsername.clear();
           },
         ),
-        SizedBox(height: 10.0),
+        SizedBox(height: 25.0),
+        RaisedGradientButton(
+          child: Text(
+            'Kullanıcı Oluştur',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+            ),
+          ),
+          gradient: LinearGradient(
+            colors: <Color>[Colors.blueAccent, Colors.purple],
+          ),
+          onPressed: () {
+            _MyHomePageState olustur = new _MyHomePageState();
+            olustur._emailSifreOlustur(username, password);
+            myPassword.clear();
+            myUsername.clear();
+          },
+        ),
       ],
     ),
   );
@@ -238,8 +339,8 @@ showAlertDialog(BuildContext context) {
   );
 
   AlertDialog alert = AlertDialog(
-    title: Text("Hata"),
-    content: Text("Kullanıcı adı veya şifre hatalı!"),
+    title: Text("Onay Gerekli"),
+    content: Text("Lütfen mailinize gönderdiğimiz bağlantıyı onaylayınız!"),
     actions: [
       okButton,
     ],

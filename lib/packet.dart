@@ -1,10 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:my_smart_home/dictionary.dart';
-import 'package:my_smart_home/main.dart';
 import 'package:my_smart_home/starting.dart';
-import 'package:my_smart_home/widgets/alarm_card.dart';
 
 class Packet {
   Uint8List packet;

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "99192259099",
+    "project_id": "akilli-evim-a1e43",
+    "storage_bucket": "akilli-evim-a1e43.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99192259099:android:e491326e977a7638966ebe",
+        "android_client_info": {
+          "package_name": "com.example.my_smart_home"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99192259099-dq5vutsulpv8altsm1tob5gf58ovrlop.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.my_smart_home",
+            "certificate_hash": "68b0f5701796e57e2e6deb858dd21c9eafee50b1"
+          }
+        },
+        {
+          "client_id": "99192259099-4hud1rju941bu0uh8mut32lgkddi2rfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9PBG_6ZR0KCBPm40LXCNwqWWwyeXlqBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99192259099-4hud1rju941bu0uh8mut32lgkddi2rfv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
