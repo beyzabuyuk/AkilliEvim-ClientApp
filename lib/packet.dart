@@ -49,18 +49,12 @@ class Packet {
   bool OnAlert() {
     switch (getDevice()) {
       case Device.A_Hirsiz:
-        print("Hırsız vaaaaaar!!");
-        // User _currentUser = FirebaseAuth.instance.currentUser;
-
-        // DocumentSnapshot documentSnapshot = FirebaseFirestore.instance
-        //     .doc("/tokens/" + _currentUser.uid)
-        //     .get() as DocumentSnapshot;
-        // var token = documentSnapshot.data()["token"].toString();
-        // BildirimGondermeServis()
-        //     .bildirimGonder("bildirimBaslik", "bildirimNotu", token);
+        print("Hırsız var!!");
+        _veriOkuHirsiz();
         return true;
       case Device.A_Yangin:
-        print("Yangın vaaaar!!");
+        print("Yangın var!!");
+        _veriOkuYangin();
         return true;
       default:
     }
@@ -91,5 +85,27 @@ class Packet {
       default:
     }
     return false;
+  }
+
+  void _veriOkuHirsiz() async {
+    User _currentUser = FirebaseAuth.instance.currentUser;
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+        .doc("/tokens/" + _currentUser.uid)
+        .get();
+    var token = documentSnapshot.data()["token"].toString();
+    print(token);
+    BildirimGondermeServis().bildirimGonder(
+        "Hırsız Alarmı", "Hareket Algılandı!!", token.toString());
+  }
+
+  void _veriOkuYangin() async {
+    User _currentUser = FirebaseAuth.instance.currentUser;
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+        .doc("/tokens/" + _currentUser.uid)
+        .get();
+    var token = documentSnapshot.data()["token"].toString();
+    print(token);
+    BildirimGondermeServis().bildirimGonder("Yangın Alarmı",
+        "Sıcaklık çok yüksek yangın olabilir!!", token.toString());
   }
 }

@@ -13,7 +13,7 @@ class BildirimGondermeServis {
     };
 
     String json =
-        '{"to" : "$token","data" : {"message" : "test", "title" : "baslik"}}';
+        '{"to" : "$token","data" : {"message" : "$bildirimBaslik", "title" : "$bildirimNotu"}}';
 
     http.Response response =
         await http.post(endURL, headers: header, body: json);

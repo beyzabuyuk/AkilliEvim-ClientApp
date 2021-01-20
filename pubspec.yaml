@@ -34,6 +34,7 @@ dependencies:
   flutter_local_notifications:
   cloud_firestore: "^0.14.4"
   http:
+  path_provider:
   
 dev_dependencies:
   flutter_test:

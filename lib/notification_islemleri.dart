@@ -38,11 +38,9 @@ class NotificationHandler {
         onSelectNotification: onSelectNotification);
 
     String token = await _fcm.getToken();
-    print("token:" + token);
 
     _fcm.onTokenRefresh.listen((newToken) async {
       User _currentUser = await FirebaseAuth.instance.currentUser;
-      print(_currentUser);
       await FirebaseFirestore.instance
           .doc("/tokens/" + _currentUser.uid)
           .set({"token": token});
@@ -62,13 +60,14 @@ class NotificationHandler {
       onResume: (Map<String, dynamic> message) async {
         //uygulama background'da
         print("onResume tetiklendi: $message");
+        showNotification(message);
       },
     );
   }
 
   static void showNotification(Map<String, dynamic> message) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        "1234", "Yeni Bildirim", "channelDescription",
+        "1234", "Yeni Bildirim", "AlarmBildirimleri",
         importance: Importance.max, priority: Priority.high, ticker: "ticker");
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
