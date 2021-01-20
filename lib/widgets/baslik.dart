@@ -36,11 +36,11 @@ class Baslik extends StatelessWidget {
                 ),
               ),
               Text(
-                'Admin',
+                'beyzbykk@gmail.com',
                 style: TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold,
-                    fontSize: 24),
+                    fontSize: 18),
               ),
             ],
           ),
