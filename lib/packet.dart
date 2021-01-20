@@ -1,5 +1,7 @@
 import 'dart:typed_data';
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_smart_home/bildirim_gonderme_servisi.dart';
 import 'package:my_smart_home/dictionary.dart';
 import 'package:my_smart_home/starting.dart';
 
@@ -48,6 +50,14 @@ class Packet {
     switch (getDevice()) {
       case Device.A_Hirsiz:
         print("Hırsız vaaaaaar!!");
+        // User _currentUser = FirebaseAuth.instance.currentUser;
+
+        // DocumentSnapshot documentSnapshot = FirebaseFirestore.instance
+        //     .doc("/tokens/" + _currentUser.uid)
+        //     .get() as DocumentSnapshot;
+        // var token = documentSnapshot.data()["token"].toString();
+        // BildirimGondermeServis()
+        //     .bildirimGonder("bildirimBaslik", "bildirimNotu", token);
         return true;
       case Device.A_Yangin:
         print("Yangın vaaaar!!");

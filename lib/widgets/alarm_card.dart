@@ -1,7 +1,10 @@
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_smart_home/bildirim_gonderme_servisi.dart';
 import 'package:my_smart_home/packet.dart';
 
 import '../dictionary.dart';
@@ -25,14 +28,23 @@ class AlarmCard extends StatefulWidget {
 }
 
 class _AlarmCardState extends State<AlarmCard> {
+  void _veriOku() async {
+    User _currentUser = FirebaseAuth.instance.currentUser;
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+        .doc("/tokens/" + _currentUser.uid)
+        .get();
+    var token = documentSnapshot.data()["token"].toString();
+    print(token);
+    BildirimGondermeServis()
+        .bildirimGonder("bildirimBaslik", "bildirimNotu", token.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     String status = Dictionary.map[widget.device] == false ? "Kapalı" : "Açık";
     Color _color = Colors.white;
     Color _colorText = Colors.black87;
-    setState(() {
-    
-    });
+    setState(() {});
     return Padding(
       padding: EdgeInsets.only(left: 16, right: 16),
       child: Container(
@@ -77,26 +89,25 @@ class _AlarmCardState extends State<AlarmCard> {
                     activeColor: Colors.grey[400],
                     value: Dictionary.map[widget.device],
                     onChanged: (value) {
-                      setState(() {
-                        Dictionary.map[widget.device] = value;
-                        Uint8List packet = Uint8List.fromList([
-                          widget.operation.index,
-                          widget.device.index,
-                          Dictionary.map[widget.device] == true ? 1 : 0
-                        ]);
-                        ConnectSocket.send(String.fromCharCodes(packet));
-                        print("Giden veri: $packet");
+                      // Dictionary.map[widget.device] = value;
+                      // Uint8List packet = Uint8List.fromList([
+                      //   widget.operation.index,
+                      //   widget.device.index,
+                      //   Dictionary.map[widget.device] == true ? 1 : 0
+                      // ]);
+                      // ConnectSocket.send(String.fromCharCodes(packet));
+                      // print("Giden veri: $packet");
 
-                        if (Dictionary.map[widget.device] == true) {
-                          status = 'Açık';
-                          _color = Theme.of(context).backgroundColor;
-                          _colorText = Colors.white;
-                        } else {
-                          status = 'Kapalı';
-                          _color = Colors.white;
-                          _colorText = Colors.black87;
-                        }
-                      });
+                      // if (Dictionary.map[widget.device] == true) {
+                      //   status = 'Açık';
+                      //   _color = Theme.of(context).backgroundColor;
+                      //   _colorText = Colors.white;
+                      // } else {
+                      //   status = 'Kapalı';
+                      //   _color = Colors.white;
+                      //   _colorText = Colors.black87;
+                      // }
+                      _veriOku();
                     },
                   ),
                 ],

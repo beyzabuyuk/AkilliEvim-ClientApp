@@ -1,7 +1,9 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_smart_home/modeller/alarm_model.dart';
 import 'package:my_smart_home/modeller/odalar.dart';
+import 'package:my_smart_home/notification_islemleri.dart';
 import 'package:my_smart_home/packet.dart';
 import 'package:my_smart_home/screens/ekranlar.dart';
 import 'package:my_smart_home/widgets/cate_container.dart';
@@ -12,7 +14,14 @@ import '../starting.dart';
 import 'oturma_odasi.dart';
 import 'mutfak.dart';
 
-class AnaEkran extends StatelessWidget {
+class AnaEkran extends StatefulWidget {
+  @override
+  _AnaEkranState createState() => _AnaEkranState();
+}
+
+class _AnaEkranState extends State<AnaEkran> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   List<RoomsModel> _listRooms = [
     RoomsModel(
       image: 'assets/images/oturma_odasi2.jpg',
@@ -43,6 +52,12 @@ class AnaEkran extends StatelessWidget {
         operation: Operation.UpdateDevice,
         device: Device.A_Yangin)
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    NotificationHandler().initializeFCMNotification(context);
+  }
 
   @override
   Widget build(BuildContext context) {
