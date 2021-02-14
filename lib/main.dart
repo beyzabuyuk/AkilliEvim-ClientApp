@@ -10,8 +10,8 @@ import 'package:google_fonts/google_fonts.dart';
 FirebaseAuth _auth = FirebaseAuth.instance;
 
 void main() async {
-  ConnectSocket.sock = await Socket.connect('192.168.1.23', 80);
-  ConnectSocket.getData();
+  // ConnectSocket.sock = await Socket.connect('192.168.1.23', 80);
+  // ConnectSocket.getData();
   runApp(MyApp());
 }
 
